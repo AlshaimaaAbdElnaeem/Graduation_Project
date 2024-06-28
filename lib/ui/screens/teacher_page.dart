@@ -41,7 +41,7 @@ class TeacherPage extends StatelessWidget {
                                 materialName!.isNotEmpty) {
                               await teacherData.getMaterialID(materialName!);
                               Navigator.of(context)
-                                  .pop(); // إغلاق الـ Dialog بعد الإضافة
+                                  .pop(); 
                             }
                           },
                           child: const Center(
