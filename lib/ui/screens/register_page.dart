@@ -180,7 +180,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     onTap: () {
                       if (formKey.currentState!.validate()) {
                         userData.authentication(email!, password!);
-                        userData.storagePersonData(email!, name!, phoneNumber!);
+                        userData.storagePersonData(name!, phoneNumber!,email!,);
                         if (state is RegisterationSuccess) {
                           showSnackBar(context, 'Success');
                         } else if (state is WeakPassword) {
