@@ -1,0 +1,10 @@
+const String viewPages = "/";
+const String logInPage = "/loginpage";
+const String registerPage = "/register";
+const String teacherPage = "/teacherPage";
+const String settingPage = "/settingPage";
+const String profilePage = "/profilePage";
+const String livePage = "/livePage";
+const String assignmentPage = "/assignmentPage";
+const String studentPage = "/studentPage";
+const String subjectPage = "/subjectPage";

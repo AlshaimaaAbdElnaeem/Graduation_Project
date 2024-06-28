@@ -1,0 +1,19 @@
+class SmoothPage extends StatelessWidget {
+  const SmoothPage({
+    super.key,
+    required PageController controller,
+  }) : _controller = controller;
+
+  final PageController _controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: const Alignment(0, 0.5),
+      child: SmoothPageIndicator(
+        controller: _controller,
+        count: 3,
+      ),
+    );
+  }
+}

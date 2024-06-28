@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "790181980189",
+    "project_id": "live-course-3068b",
+    "storage_bucket": "live-course-3068b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790181980189:android:460bb480a5e47d01aa7ef4",
+        "android_client_info": {
+          "package_name": "com.example.graduation_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiYlUOsN4bDqQLinI2spi5AiPmsWB9tC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
