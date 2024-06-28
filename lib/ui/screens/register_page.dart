@@ -181,10 +181,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     CustomButton(
                       text: 'Register',
                       onTap: () {
-                        if (formKey.currentState!.validate()) {
-                          setState(() {
+                        setState(() {
                             isLoading = true;
                           });
+                        if (formKey.currentState!.validate()) {
+
                           userData.authentication(email!, password!);
                           userData.storagePersonData(
                             name!,

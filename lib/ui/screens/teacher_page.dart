@@ -37,9 +37,11 @@ class TeacherPage extends StatelessWidget {
                             foregroundColor: Colors.white,
                           ),
                           onPressed: () async {
-                            if (materialName != null && materialName!.isNotEmpty) {
+                            if (materialName != null &&
+                                materialName!.isNotEmpty) {
                               await teacherData.getMaterialID(materialName!);
-                              Navigator.of(context).pop(); // إغلاق الـ Dialog بعد الإضافة
+                              Navigator.of(context)
+                                  .pop(); // إغلاق الـ Dialog بعد الإضافة
                             }
                           },
                           child: const Center(
