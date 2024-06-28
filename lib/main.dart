@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/data/cubit/logincubit/logincubit.dart';
 import 'package:graduation_project/data/cubit/registercubit/registercubit.dart';
+import 'package:graduation_project/data/cubit/teachercubit/teacherCubit.dart';
 import 'package:graduation_project/router/go_router_app.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:graduation_project/ui/constant.dart';
@@ -27,6 +28,8 @@ class LiveCourseApp extends StatelessWidget {
             create: (BuildContext context) => RegisterCubit()),
         BlocProvider<LogInCubit>(
             create: (BuildContext context) => LogInCubit()),
+        BlocProvider<TeacherCubit>(
+            create: (BuildContext context) => TeacherCubit()),
       ],
       child: ValueListenableBuilder(
         valueListenable: Hive.box(setting).listenable(),

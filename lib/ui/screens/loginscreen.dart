@@ -48,6 +48,9 @@ class _LogInPageState extends State<LogInPage> {
                 CustomTextFromField(
                   hintText: 'Email',
                   preIcone: const Icon(Icons.email),
+                  onChange: (data) {
+                    email = data.toString();
+                  },
                 ),
                 const SizedBox(
                   height: 18,

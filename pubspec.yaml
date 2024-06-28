@@ -42,6 +42,7 @@ dependencies:
   hive_flutter: ^1.1.0
   image_picker: ^1.0.7
   intl: any
+  modal_progress_hud_nsn: ^0.5.1
   sizer: ^2.0.15
   smooth_page_indicator: ^1.1.0
 

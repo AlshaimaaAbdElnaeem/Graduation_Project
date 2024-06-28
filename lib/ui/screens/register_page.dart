@@ -12,6 +12,7 @@ import 'package:graduation_project/ui/widgets/custom_button.dart';
 import 'package:graduation_project/ui/widgets/custom_text_field.dart';
 import 'package:graduation_project/util/utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -35,7 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String? name;
   String? phoneNumber;
   String? email;
-
+  bool isLoading = false;
   GlobalKey<FormState> formKey = GlobalKey();
   List<String> options = ['Teacher', 'Student'];
   @override
@@ -43,178 +44,196 @@ class _RegisterPageState extends State<RegisterPage> {
     return BlocBuilder<RegisterCubit, RegisterState>(
       builder: (context, state) {
         var userData = BlocProvider.of<RegisterCubit>(context);
-        return Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Form(
-              key: formKey,
-              child: ListView(
-                children: [
-                  Center(
-                    child: Stack(
-                      children: [
-                        _image != null
-                            ? CircleAvatar(
-                                radius: 60,
-                                backgroundImage: MemoryImage(_image!),
-                              )
-                            : const CircleAvatar(
-                                radius: 60,
-                                backgroundImage: AssetImage(
-                                  'assets/images/person.jpg',
+        return ModalProgressHUD(
+          inAsyncCall: isLoading,
+          child: Scaffold(
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Form(
+                key: formKey,
+                child: ListView(
+                  children: [
+                    Center(
+                      child: Stack(
+                        children: [
+                          _image != null
+                              ? CircleAvatar(
+                                  radius: 60,
+                                  backgroundImage: MemoryImage(_image!),
+                                )
+                              : const CircleAvatar(
+                                  radius: 60,
+                                  backgroundImage: AssetImage(
+                                    'assets/images/person.jpg',
+                                  ),
                                 ),
-                              ),
-                        Positioned(
-                          left: 80,
-                          bottom: -10,
-                          child: IconButton(
-                              onPressed: selectImage,
-                              icon: const Icon(Icons.add_a_photo)),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Text(
-                    'Name',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  CustomTextFromField(
-                    hintText: 'Enter your name',
-                    preIcone: const Icon(Icons.person),
-                    onChange: (data) {
-                      name = data.toString();
-                    },
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  const Text(
-                    'Email',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  CustomTextFromField(
-                    onChange: (data) {
-                      email = data.toString();
-                    },
-                    hintText: 'Enter your Email',
-                    preIcone: const Icon(Icons.email),
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  const Text(
-                    'Password',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  CustomTextFromField(
-                    onChange: (data) {
-                      password = data.toString();
-                    },
-                    hintText: 'Enter Password',
-                    obscre: isHidden,
-                    preIcone: const Icon(Icons.key),
-                    suffIcon: isHidden == true
-                        ? IconButton(
-                            onPressed: () {
-                              isHidden = false;
-                              setState(() {});
-                            },
-                            icon: const Icon(Icons.visibility_off))
-                        : IconButton(
-                            onPressed: () {
-                              isHidden = true;
-                              setState(() {});
-                            },
-                            icon: const Icon(Icons.visibility)),
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  const Text(
-                    'Phone Number',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  CustomTextFromField(
-                    hintText: 'Enter your phone number',
-                    keyboardType: TextInputType.number,
-                    onChange: (data) {
-                      phoneNumber = data.toString();
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      const Text('Teacher'),
-                      Radio(
-                        value: options[0],
-                        groupValue: userData.selectPerson,
-                        onChanged: (value) {
-                          setState(() {
-                            userData.selectPerson = value.toString();
-                          });
-                        },
+                          Positioned(
+                            left: 80,
+                            bottom: -10,
+                            child: IconButton(
+                                onPressed: selectImage,
+                                icon: const Icon(Icons.add_a_photo)),
+                          )
+                        ],
                       ),
-                      const Text('Student'),
-                      Radio(
-                        value: options[1],
-                        groupValue: userData.selectPerson,
-                        onChanged: (value) {
-                          setState(() {
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    const Text(
+                      'Name',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    CustomTextFromField(
+                      hintText: 'Enter your name',
+                      preIcone: const Icon(Icons.person),
+                      onChange: (data) {
+                        name = data.toString();
+                      },
+                    ),
+                    const SizedBox(
+                      height: 18,
+                    ),
+                    const Text(
+                      'Email',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    CustomTextFromField(
+                      onChange: (data) {
+                        email = data.toString();
+                      },
+                      hintText: 'Enter your Email',
+                      preIcone: const Icon(Icons.email),
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    const SizedBox(
+                      height: 18,
+                    ),
+                    const Text(
+                      'Password',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    CustomTextFromField(
+                      onChange: (data) {
+                        password = data.toString();
+                      },
+                      hintText: 'Enter Password',
+                      obscre: isHidden,
+                      preIcone: const Icon(Icons.key),
+                      suffIcon: isHidden == true
+                          ? IconButton(
+                              onPressed: () {
+                                isHidden = false;
+                                setState(() {});
+                              },
+                              icon: const Icon(Icons.visibility_off))
+                          : IconButton(
+                              onPressed: () {
+                                isHidden = true;
+                                setState(() {});
+                              },
+                              icon: const Icon(Icons.visibility)),
+                    ),
+                    const SizedBox(
+                      height: 18,
+                    ),
+                    const Text(
+                      'Phone Number',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    CustomTextFromField(
+                      hintText: 'Enter your phone number',
+                      keyboardType: TextInputType.number,
+                      onChange: (data) {
+                        phoneNumber = data.toString();
+                      },
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const Text('Teacher'),
+                        Radio(
+                          value: options[0],
+                          groupValue: userData.selectPerson,
+                          onChanged: (value) {
                             setState(() {
                               userData.selectPerson = value.toString();
                             });
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 18),
-                  CustomButton(
-                    text: 'Register',
-                    onTap: () {
-                      if (formKey.currentState!.validate()) {
-                        userData.authentication(email!, password!);
-                        userData.storagePersonData(name!, phoneNumber!,email!,);
-                        if (state is RegisterationSuccess) {
-                          showSnackBar(context, 'Success');
-                        } else if (state is WeakPassword) {
-                          showSnackBar(context, 'Password Weak');
-                        } else if (state is EmailExist) {
-                          showSnackBar(context,
-                              'The account already exists for that email.');
-                        } else if (state is AnotherError) {
-                          showSnackBar(context, state.errorMessage);
-                        }
-                      }
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        ' Have an account ? ',
-                        style: TextStyle(),
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            context.go(logInPage);
                           },
-                          child: const Text(
-                            ' LogIn',
-                            style: TextStyle(color: mainColor),
-                          )),
-                    ],
-                  ),
-                ],
+                        ),
+                        const Text('Student'),
+                        Radio(
+                          value: options[1],
+                          groupValue: userData.selectPerson,
+                          onChanged: (value) {
+                            setState(() {
+                              setState(() {
+                                userData.selectPerson = value.toString();
+                              });
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 18),
+                    CustomButton(
+                      text: 'Register',
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          userData.authentication(email!, password!);
+                          userData.storagePersonData(
+                            name!,
+                            phoneNumber!,
+                            email!,
+                          );
+                          setState(() {
+                            isLoading = false;
+                          });
+                          if (state is RegisterationSuccess) {
+                            showSnackBar(context, 'Success');
+                            if (userData.selectPerson == 'Teacher') {
+                              context.go(teacherPage);
+                            } else if (userData.selectPerson == 'Student') {
+                              context.go(studentPage);
+                            }
+                          } else if (state is WeakPassword) {
+                            showSnackBar(context, 'Password Weak');
+                          } else if (state is EmailExist) {
+                            showSnackBar(context,
+                                'The account already exists for that email.');
+                          } else if (state is AnotherError) {
+                            showSnackBar(context, state.errorMessage);
+                          }
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          ' Have an account ? ',
+                          style: TextStyle(),
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              context.go(logInPage);
+                            },
+                            child: const Text(
+                              ' LogIn',
+                              style: TextStyle(color: mainColor),
+                            )),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
