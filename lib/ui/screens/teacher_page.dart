@@ -11,78 +11,71 @@ class TeacherPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TeacherCubit, TeacherState>(builder: (context, state) {
-      var teacherData = BlocProvider.of<TeacherCubit>(context);
-
-      return Scaffold(
-        appBar: AppBar(
-          backgroundColor: mainColor,
-          actions: [
-            IconButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => SizedBox(
-                    child: AlertDialog(
-                      title: const Text('Enter the Material Name'),
-                      content: TextField(
-                        cursorColor: mainColor,
-                        onSubmitted: (value) {
-                          materialName = value;
-                        },
-                      ),
-                      actions: [
-                        TextButton(
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                          ),
-                          onPressed: () async {
-                            if (materialName != null &&
-                                materialName!.isNotEmpty) {
-                              await teacherData.getMaterialID(materialName!);
-                              Navigator.of(context)
-                                  .pop(); 
-                            }
-                          },
-                          child: const Center(
-                            child: Text(
-                              'ok',
-                              style: TextStyle(fontSize: 30, color: mainColor),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: mainColor,
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Enter the Material Name'),
+                  content: TextField(
+                    cursorColor: mainColor,
+                    onSubmitted: (value) {
+                      materialName = value;
+                    },
                   ),
-                );
-              },
-              icon: const Icon(
-                Icons.add_circle_outline,
-                size: 40,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-        body: Builder(
-          builder: (context) {
-            if (state is TeacherInitial) {
-              return const Center(child: Text('Enter your Material Name'));
-            } else if (state is TeacherLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is TeacherLoaded) {
-              return TecaherCard(
-                materialName: materialName!,
-                materialID: state.materialID,
+                  actions: [
+                    TextButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: () async {
+                        if (materialName != null && materialName!.isNotEmpty) {
+                          var teacherData = BlocProvider.of<TeacherCubit>(context);
+                          await teacherData.getMaterialID(materialName!);
+                          Navigator.of(context).pop(); 
+                        }
+                      },
+                      child: const Center(
+                        child: Text(
+                          'ok',
+                          style: TextStyle(fontSize: 30, color: mainColor),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               );
-            } else if (state is TeacherError) {
-              return Center(child: Text(state.message));
-            } else {
-              return const Center(child: Text('Unknown State'));
-            }
-          },
-        ),
-      );
-    });
+            },
+            icon: const Icon(
+              Icons.add_circle_outline,
+              size: 40,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+      body: BlocBuilder<TeacherCubit, TeacherState>(
+        builder: (context, state) {
+          if (state is TeacherInitial) {
+            return const Center(child: Text('Enter your Material Name'));
+          } else if (state is TeacherLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is TeacherLoaded) {
+            return TecaherCard(
+              materialName: materialName!,
+              materialID: state.materialID,
+            );
+          } else if (state is TeacherError) {
+            return Center(child: Text(state.message));
+          } else {
+            return const Center(child: Text('Unknown State'));
+          }
+        },
+      ),
+    );
   }
 }
