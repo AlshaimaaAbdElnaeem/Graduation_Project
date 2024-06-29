@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/data/cubit/studentcubit/student_cubit.dart';
+import 'package:graduation_project/data/cubit/studentcubit/student_status.dart';
 import 'package:graduation_project/ui/constant.dart';
 import 'package:graduation_project/ui/widgets/subject_card.dart';
 
@@ -12,7 +15,12 @@ class StudentPage extends StatefulWidget {
 class _StudentPageState extends State<StudentPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+       create: (BuildContext context) =>StudentCubit(),
+       child: BlocBuilder<StudentCubit , StudentState> (
+       builder: (context, state) {
+     var accessStudentCubit = BlocProvider.of<StudentCubit>(context);
+      return  Scaffold(
       appBar: AppBar(
         backgroundColor: mainColor,
         actions: [
@@ -79,6 +87,12 @@ class _StudentPageState extends State<StudentPage> {
       //     )
       //   ],
       // ),
+    );
+
+
+       },),
+  
+       
     );
   }
 }

@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/data/cubit/studentcubit/student_Status.dart';
+import 'package:graduation_project/data/cubit/studentcubit/student_status.dart';
 import 'package:graduation_project/ui/constant.dart';
 
 class StudentCubit extends Cubit<StudentState> {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   StudentCubit() : super(StudentInitial());
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Future<void> fetchUserData() async {
     try {
       emit(StudentDataLoading());

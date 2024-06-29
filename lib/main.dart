@@ -26,8 +26,6 @@ class LiveCourseApp extends StatelessWidget {
       providers: [
         BlocProvider<RegisterCubit>(
             create: (BuildContext context) => RegisterCubit()),
-         BlocProvider<TeacherCubit>(
-            create: (BuildContext context) => TeacherCubit()),
         BlocProvider<LogInCubit>(
             create: (BuildContext context) => LogInCubit()),
        
