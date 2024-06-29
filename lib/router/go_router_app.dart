@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:graduation_project/router/constant_go_router.dart';
 import 'package:graduation_project/ui/screens/loginscreen.dart';
 import 'package:graduation_project/ui/screens/register_page.dart';
-import 'package:graduation_project/ui/screens/teacherPage.dart';
+import 'package:graduation_project/ui/screens/teacher_page.dart';
 import 'package:graduation_project/ui/screens/view_page.dart';
 
 GoRouter goRouter() {
@@ -20,7 +20,7 @@ GoRouter goRouter() {
         builder: ((context, state) => const RegisterPage())),
     GoRoute(
       path: teacherPage,
-      builder: ((context, state) => const TeacherPage()),
+      builder: ((context, state) =>TeacherPage()),
     ),
   ]);
 }
