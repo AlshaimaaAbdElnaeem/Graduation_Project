@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/data/cubit/teachercubit/teacherStatus.dart';
+import 'package:graduation_project/data/cubit/teachercubit/teacher_status.dart';
 import 'package:graduation_project/ui/constant.dart';
 
 

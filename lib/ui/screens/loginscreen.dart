@@ -95,6 +95,10 @@ class _LogInPageState extends State<LogInPage> {
                 CustomButton(
                   text: 'LogIn',
                   onTap: () {
+                    if (state is Loading) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
                     if (formKey.currentState!.validate()) {
                       userData.login(email!, password!);
                       if (state is LoginSuccessfully) {
