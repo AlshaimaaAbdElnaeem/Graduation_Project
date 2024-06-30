@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/ui/screens/assignment_page.dart';
+import 'package:graduation_project/ui/screens/live_page.dart';
+import 'package:graduation_project/ui/screens/profile_page.dart';
 import 'package:graduation_project/ui/screens/settingPage.dart';
+import 'package:graduation_project/ui/screens/teacher_page.dart';
 
-class CustomNavigationBar extends StatefulWidget {
-  const CustomNavigationBar({super.key});
+class CustomNavigationBarTeacher extends StatefulWidget {
+  const CustomNavigationBarTeacher({super.key});
 
   @override
-  State<CustomNavigationBar> createState() => _CustomNavigationBarState();
+  State<CustomNavigationBarTeacher> createState() => _CustomNavigationBarState();
 }
 
-class _CustomNavigationBarState extends State<CustomNavigationBar> {
+class _CustomNavigationBarState extends State<CustomNavigationBarTeacher> {
   int index = 2;
   final pages = [
     const SettingPage(),
-    const Center(child: Text('Profiles')),
-    const Center(child: Text('HomePage')),
-    const Center(child: Text('Assignments')),
-    const Center(child: Text('Live')),
+     ProfilePage(),
+    TeacherPage(),
+   const AssignmentPage(),
+   const LivePage(),   
   ];
   @override
   Widget build(BuildContext context) {

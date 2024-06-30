@@ -17,8 +17,6 @@ class LogInPage extends StatefulWidget {
 
 class _LogInPageState extends State<LogInPage> {
   bool isHidden = true;
-  String? password;
-  String? email;
   GlobalKey<FormState> formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -49,7 +47,7 @@ class _LogInPageState extends State<LogInPage> {
                   hintText: 'Email',
                   preIcone: const Icon(Icons.email),
                   onChange: (data) {
-                    email = data.toString();
+                    userData.email = data.toString();
                   },
                 ),
                 const SizedBox(
@@ -61,7 +59,7 @@ class _LogInPageState extends State<LogInPage> {
                 ),
                 CustomTextFromField(
                   onChange: (data) {
-                    password = data;
+                   userData.password = data;
                   },
                   hintText: 'Password',
                   obscre: isHidden,
@@ -81,16 +79,6 @@ class _LogInPageState extends State<LogInPage> {
                           icon: const Icon(Icons.visibility)),
                 ),
                 const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.only(left: 220),
-                  child: GestureDetector(
-                    child: const Text(
-                      'Forget Password ?',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    onTap: () {},
-                  ),
-                ),
                 const SizedBox(height: 30),
                 CustomButton(
                   text: 'LogIn',
@@ -100,7 +88,7 @@ class _LogInPageState extends State<LogInPage> {
                     }
 
                     if (formKey.currentState!.validate()) {
-                      userData.login(email!, password!);
+                      userData.login();
                       if (state is LoginSuccessfully) {
                         showSnackBar(context, 'Success');
                       } else if (state is WrongPassword) {

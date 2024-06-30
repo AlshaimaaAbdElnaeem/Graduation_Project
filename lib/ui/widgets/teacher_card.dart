@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TecaherCard extends StatelessWidget {
-  const TecaherCard(
+class TeacherCard extends StatelessWidget {
+  const TeacherCard(
       {super.key, required this.materialName, required this.materialID});
   final String materialName;
   final String materialID;

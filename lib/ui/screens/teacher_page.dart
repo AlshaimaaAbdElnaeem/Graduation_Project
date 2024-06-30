@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/data/cubit/teachercubit/teacher_status.dart';
 import 'package:graduation_project/data/cubit/teachercubit/teacher_cubit.dart';
 import 'package:graduation_project/ui/constant.dart';
+import 'package:graduation_project/ui/widgets/navegationbar_teacher.dart';
 import 'package:graduation_project/ui/widgets/teacher_card.dart';
 
 class TeacherPage extends StatelessWidget {
@@ -12,10 +13,13 @@ class TeacherPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context)=> TeacherCubit(),
-        child: BlocBuilder<TeacherCubit, TeacherState>(builder: (context, state) {
-          var teacherData = BlocProvider.of<TeacherCubit>(context);
+      create: (context) =>
+          TeacherCubit()..fetchData(context), // Fetch data on creation
+      child: BlocBuilder<TeacherCubit, TeacherState>(
+        builder: (context, state) {
+          var teacherCubit = BlocProvider.of<TeacherCubit>(context);
           return Scaffold(
+            bottomNavigationBar: const CustomNavigationBarTeacher(),
             appBar: AppBar(
               backgroundColor: mainColor,
               actions: [
@@ -23,36 +27,33 @@ class TeacherPage extends StatelessWidget {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => SizedBox(
-                        child: AlertDialog(
-                          title: const Text('Enter the Material Name'),
-                          content: TextField(
-                            cursorColor: mainColor,
-                            onSubmitted: (value) {
-                              materialName = value;
+                      builder: (context) => AlertDialog(
+                        title: const Text('Enter the Material Name'),
+                        content: TextField(
+                          cursorColor: mainColor,
+                          onSubmitted: (value) {
+                            materialName = value;
+                          },
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () async {
+                              if (materialName != null &&
+                                  materialName!.isNotEmpty) {
+                                await teacherCubit.addMaterial(
+                                    materialName!, context);
+                                Navigator.of(context).pop();
+                                await teacherCubit.fetchData(context);
+                              }
                             },
-                          ),
-                          actions: [
-                            TextButton(
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.white,
-                              ),
-                              onPressed: () async {
-                                if (materialName != null &&
-                                    materialName!.isNotEmpty) {
-                                  await teacherData.getMaterialID(materialName!);
-                                  Navigator.of(context).pop(); 
-                                }
-                              },
-                              child: const Center(
-                                child: Text(
-                                  'ok',
-                                  style: TextStyle(fontSize: 30, color: mainColor),
-                                ),
+                            child: const Center(
+                              child:  Text(
+                                'OK',
+                                style: TextStyle(fontSize: 20, color: mainColor),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     );
                   },
@@ -71,9 +72,15 @@ class TeacherPage extends StatelessWidget {
                 } else if (state is TeacherLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is TeacherLoaded) {
-                  return TecaherCard(
-                    materialName: materialName!,
-                    materialID: state.materialID,
+                  return ListView.builder(
+                    itemCount: state.materialData.length,
+                    itemBuilder: (context, index) {
+                      var material = state.materialData[index];
+                      return TeacherCard(
+                        materialName: material['materialName']!,
+                        materialID: material['id']!,
+                      );
+                    },
                   );
                 } else if (state is TeacherError) {
                   return Center(child: Text(state.message));
@@ -83,8 +90,8 @@ class TeacherPage extends StatelessWidget {
               },
             ),
           );
-        })
-      
+        },
+      ),
     );
   }
 }

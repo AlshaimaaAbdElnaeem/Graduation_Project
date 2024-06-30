@@ -5,9 +5,9 @@ class TeacherInitial extends TeacherState {}
 class TeacherLoading extends TeacherState {}
 
 class TeacherLoaded extends TeacherState {
-  final String materialID;
+  final List<Map<String, String>> materialData;
 
-  TeacherLoaded(this.materialID);
+  TeacherLoaded(this.materialData);
 }
 
 class TeacherError extends TeacherState {
@@ -15,9 +15,5 @@ class TeacherError extends TeacherState {
 
   TeacherError(this.message);
 }
-class DataLoading extends TeacherState{}
-class DataLoaded extends TeacherState{
-   final List<Map<String, String>> data;
 
-  DataLoaded({required this.data});
-}
+
