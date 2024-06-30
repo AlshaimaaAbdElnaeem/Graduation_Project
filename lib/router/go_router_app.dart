@@ -6,6 +6,7 @@ import 'package:graduation_project/ui/screens/teacher_page.dart';
 import 'package:graduation_project/ui/screens/view_page.dart';
 import 'package:graduation_project/ui/widgets/navegationbar.dart';
 import 'package:graduation_project/ui/widgets/navegationbar_teacher.dart';
+import 'package:graduation_project/ui/widgets/teacher_live.dart';
 
 GoRouter goRouter() {
   return GoRouter(initialLocation: viewPages, routes: [
@@ -32,5 +33,10 @@ GoRouter goRouter() {
       path: navigationbarStudent,
       builder: ((context, state) => const CustomNavigationBar()),
     ),
+     GoRoute(
+      path:teacherLive ,
+      builder: ((context, state) =>  TeacherLiveScreen()),
+    ),
   ]);
+  
 }

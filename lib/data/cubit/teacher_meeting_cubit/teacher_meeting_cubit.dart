@@ -4,11 +4,11 @@ import 'package:graduation_project/data/cubit/teacher_meeting_cubit/teacher_meet
 import 'package:graduation_project/ui/constant.dart';
 
 
-class TeacherCubit extends Cubit<TeacherMeetingState> {
+class TeacherMeetingCubit extends Cubit<TeacherMeetingState> {
   final CollectionReference _channelsCollection =
       FirebaseFirestore.instance.collection(kChannels);
 
-  TeacherCubit() : super(TeacherMeetingInitial());
+  TeacherMeetingCubit() : super(TeacherMeetingInitial());
 
   Future<void> createChannelAndJoin(String channelName) async {
     emit(TeacherMeetingLoading());
