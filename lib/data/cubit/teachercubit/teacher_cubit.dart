@@ -56,6 +56,9 @@ class TeacherCubit extends Cubit<TeacherState> {
           'id': doc.id.toString(),
         };
       }).toList();
+      if (materialData.isEmpty) {
+        emit(TeacherInitial());
+      }
       emit(TeacherLoaded(materialData));
     } catch (e) {
       emit(TeacherInitial());

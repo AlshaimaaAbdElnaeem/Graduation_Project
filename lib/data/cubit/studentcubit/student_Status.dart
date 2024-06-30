@@ -18,9 +18,6 @@ class StudentError extends StudentState {
 class MaterialDataLoading extends StudentState {}
 
 class MaterialDataLoaded extends StudentState {
-  final List<Map<String, String>> data;
-
-  MaterialDataLoaded(this.data);
 }
 
 class MaterialDataError extends StudentState {

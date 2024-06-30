@@ -30,19 +30,18 @@ class StudentPage extends StatelessWidget {
                         title: const Text('Enter the Material code'),
                         content: TextField(
                           cursorColor: mainColor,
-                          onSubmitted: (value) {
+                          onChanged: (value) {
                             materialCode = value;
                           },
                         ),
                         actions: [
                           TextButton(
                             onPressed: () async {
-                              if (studentCubit != null &&
+                              if (
                                   materialCode!.isNotEmpty) {
                                 await studentCubit.addMaterial(
                                     materialCode!, context);
                                 Navigator.of(context).pop();
-                                await studentCubit.fetchData(context);
                               }
                             },
                             child: const Center(
@@ -66,7 +65,7 @@ class StudentPage extends StatelessWidget {
             ),
             body: Builder(
               builder: (context) {
-                if (state is TeacherInitial) {
+                if (state is StudentInitial) {
                   return const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

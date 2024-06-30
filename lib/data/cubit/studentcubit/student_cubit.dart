@@ -9,36 +9,40 @@ import 'package:graduation_project/ui/constant.dart';
 class StudentCubit extends Cubit<StudentState> {
   StudentCubit() : super(StudentInitial());
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  CollectionReference materials = FirebaseFirestore.instance.collection(kStudentMaterial);
+  CollectionReference materials =
+      FirebaseFirestore.instance.collection(kStudentMaterial);
 
   Future<void> addMaterial(String materialID, BuildContext context) async {
     emit(StudentLoading());
     try {
       final registerData = context.read<RegisterCubit>();
-      // Fetch the material name
-      String materialName = await fetchMaterialName(materialID);
+      Map<String, dynamic> materialData = await fetchMaterialName(materialID);
 
       await materials.add({
         'material_id': materialID,
         'student_id': registerData.email,
-        'teacherName': registerData.name,
-        'material_name': materialName,
+        'teacher_name': materialData['teacherName'],
+        'material_name': materialData['MaterialName'],
       });
 
-      await fetchData(context);
+      await fetchData(context); // Update data after adding material
     } catch (e) {
       emit(StudentError("Failed to add material"));
-      rethrow;
     }
   }
 
-  Future<String> fetchMaterialName(String materialID) async {
+  Future<Map<String, dynamic>> fetchMaterialName(String materialID) async {
     try {
       emit(MaterialDataLoading());
-      DocumentSnapshot documentSnapshot = await _firestore.collection(kMaterialsCollection).doc(materialID).get();
+      DocumentSnapshot documentSnapshot = await _firestore
+          .collection(kMaterialsCollection)
+          .doc(materialID)
+          .get();
       if (documentSnapshot.exists) {
-        Map<String, String> data = documentSnapshot.data() as Map<String, String>;
-        return data['name']!;
+        Map<String, dynamic> data =
+            documentSnapshot.data() as Map<String, dynamic>;
+            print (data['MaterialName'].toString());
+        return data;
       } else {
         throw Exception("Material not found");
       }
@@ -48,20 +52,6 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
-  // Future<void> fetchUserData() async {
-  //   try {
-  //     emit(StudentDataLoading());
-  //     QuerySnapshot snapshot = await _firestore.collection(users).get();
-  //     await _firestore.collection(kMaterialsCollection).get();
-  //     List<DocumentSnapshot> documents = snapshot.docs;
-  //     List<Map<String, String>> userData =
-  //         documents.map((doc) => doc.data() as Map<String, String>).toList();
-  //     emit(StudentDataLoaded(userData));
-  //   } catch (e) {
-  //     emit(StudentDataError(e.toString()));
-  //   }
-  // }
-
   Future<void> fetchData(BuildContext context) async {
     final registerData = context.read<RegisterCubit>();
     final loginData = context.read<LogInCubit>();
@@ -69,21 +59,22 @@ class StudentCubit extends Cubit<StudentState> {
       emit(StudentLoading());
       QuerySnapshot snapshot = await materials.get();
       List<DocumentSnapshot> documents = snapshot.docs;
-      print(registerData.email.toString());
       List<Map<String, String>> materialData = documents
           .where((doc) =>
-              doc['email'] == registerData.email ||
-              doc['email'] == loginData.email )
+              doc['student_id'] == registerData.email ||
+              doc['student_id'] == loginData.email)
           .map((doc) {
         return {
           'materialName': doc['material_name'].toString(),
-          'teacherName' :doc['teacher_name'].toString()
+          'teacherName': doc['teacher_name'].toString()
         };
       }).toList();
-      emit(StudentLoaded(materialData));
+      if (materialData.isEmpty) {
+        emit(StudentInitial());
+      }
+      emit(StudentLoaded(materialData)); // Update state with loaded data
     } catch (e) {
-      emit(StudentInitial());
+       emit(StudentInitial());
     }
   }
 }
-
