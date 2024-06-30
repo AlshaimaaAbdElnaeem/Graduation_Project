@@ -41,8 +41,7 @@ class TeacherPage extends StatelessWidget {
                                 if (materialName != null &&
                                     materialName!.isNotEmpty) {
                                   await teacherData.getMaterialID(materialName!);
-                                  Navigator.of(context)
-                                      .pop(); 
+                                  Navigator.of(context).pop(); 
                                 }
                               },
                               child: const Center(

@@ -88,7 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       hintText: 'Enter your name',
                       preIcone: const Icon(Icons.person),
                       onChange: (data) {
-                        name = data.toString();
+                        userData.name = data.toString();
                       },
                     ),
                     const SizedBox(
@@ -100,7 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     CustomTextFromField(
                       onChange: (data) {
-                        email = data.toString();
+                        userData.email = data.toString();
                       },
                       hintText: 'Enter your Email',
                       preIcone: const Icon(Icons.email),
@@ -115,7 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     CustomTextFromField(
                       onChange: (data) {
-                        password = data.toString();
+                        userData.password = data.toString();
                       },
                       hintText: 'Enter Password',
                       obscre: isHidden,
@@ -145,7 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       hintText: 'Enter your phone number',
                       keyboardType: TextInputType.number,
                       onChange: (data) {
-                        phoneNumber = data.toString();
+                       userData.phone = data.toString();
                       },
                     ),
                     const SizedBox(
@@ -186,12 +186,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           });
                         if (formKey.currentState!.validate()) {
 
-                          userData.authentication(email!, password!);
-                          userData.storagePersonData(
-                            name!,
-                            phoneNumber!,
-                            email!,
-                          );
+                          userData.authentication();
+                          userData.storagePersonData();
                           setState(() {
                             isLoading = false;
                           });

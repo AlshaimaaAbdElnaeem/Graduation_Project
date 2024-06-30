@@ -15,3 +15,9 @@ class TeacherError extends TeacherState {
 
   TeacherError(this.message);
 }
+class DataLoading extends TeacherState{}
+class DataLoaded extends TeacherState{
+   final List<Map<String, String>> data;
+
+  DataLoaded({required this.data});
+}

@@ -7,6 +7,10 @@ import 'package:graduation_project/ui/constant.dart';
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(RegisterInitial());
   String? selectPerson;
+  String? email;
+  String? name;
+  String? phone;
+  String? password;
   person(selectPerson) {
     if (selectPerson == 'Teacher') {
       emit(PersonIsTeacher());
@@ -15,10 +19,10 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
-  Future<void> authentication(String email, String password) async {
+  Future<void> authentication() async {
     try {
       await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+          .createUserWithEmailAndPassword(email: email!, password: password!);
       emit(RegisterationSuccess());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -31,8 +35,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
-  Future<void> storagePersonData(
-      String name, String phone, String email) async {
+  Future<void> storagePersonData() async {
     FirebaseFirestore.instance.collection(users).add({
       'id': email,
       'name': name,
