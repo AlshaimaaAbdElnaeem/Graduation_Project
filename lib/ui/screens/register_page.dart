@@ -194,7 +194,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           if (state is RegisterationSuccess) {
                             showSnackBar(context, 'Success');
                             if (userData.selectPerson == 'Teacher') {
-                              context.go(teacherPage);
+                              context.go(navigationbarTeacher);
                             } else if (userData.selectPerson == 'Student') {
                               context.go(studentPage);
                             }

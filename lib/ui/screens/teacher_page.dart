@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/data/cubit/teachercubit/teacher_status.dart';
 import 'package:graduation_project/data/cubit/teachercubit/teacher_cubit.dart';
 import 'package:graduation_project/ui/constant.dart';
-import 'package:graduation_project/ui/widgets/navegationbar_teacher.dart';
 import 'package:graduation_project/ui/widgets/teacher_card.dart';
 
 class TeacherPage extends StatelessWidget {
@@ -14,12 +13,11 @@ class TeacherPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          TeacherCubit()..fetchData(context), // Fetch data on creation
+          TeacherCubit()..fetchData(context),
       child: BlocBuilder<TeacherCubit, TeacherState>(
         builder: (context, state) {
           var teacherCubit = BlocProvider.of<TeacherCubit>(context);
           return Scaffold(
-            bottomNavigationBar: const CustomNavigationBarTeacher(),
             appBar: AppBar(
               backgroundColor: mainColor,
               actions: [
@@ -68,7 +66,21 @@ class TeacherPage extends StatelessWidget {
             body: Builder(
               builder: (context) {
                 if (state is TeacherInitial) {
-                  return const Center(child: Text('Enter your Material Name'));
+                  return const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Enter your subject code',
+            style: TextStyle(fontSize: 35 , fontWeight: FontWeight.bold),
+          ),
+          Center(
+            child: CircleAvatar(
+              backgroundImage: AssetImage('assets/images/main.jpg'),
+              radius: 100,
+            ),
+          )
+        ],
+      );
                 } else if (state is TeacherLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is TeacherLoaded) {

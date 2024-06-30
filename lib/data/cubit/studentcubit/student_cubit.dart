@@ -20,14 +20,14 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
-  Future<void> fetchMaterialData() async {
+  Future<void> fetchMaterialData(String materialID) async {
     try {
       emit(MaterialDataLoading());
       QuerySnapshot snapshot =
           await _firestore.collection(kMaterialsCollection).get();
       List<DocumentSnapshot> documents = snapshot.docs;
       List<Map<String, String>> materialData =
-          documents.map((doc) => doc.data() as Map<String, String>).toList();
+          documents.where((doc) => doc.id== materialID ).map((doc)=>doc.data() as Map<String, String>).toList();
       emit(MaterialDataLoaded(materialData));
     } catch (e) {
       emit(MaterialDataError(e.toString()));
