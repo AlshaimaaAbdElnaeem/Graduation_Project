@@ -9,3 +9,4 @@ const String assignmentPage = "/assignmentPage";
 const String studentPage = "/studentPage";
 const String subjectPage = "/subjectPage";
 const String navigationbarTeacher = "/navigationbar";
+const String navigationbarStudent = "/navigationbarstudent";

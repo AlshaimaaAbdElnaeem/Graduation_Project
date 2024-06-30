@@ -15,12 +15,23 @@ class TeacherCubit extends Cubit<TeacherState> {
     emit(TeacherLoading());
     try {
       final registerData = context.read<RegisterCubit>();
-      await materials.add({
-        'MaterialName': materialName,
-        'email': registerData.email,
-        'teacherName': registerData.name,
-      });
-      await fetchData(context); // Update the data after adding a new material
+
+      // Check if material already exists
+      QuerySnapshot existingMaterial = await materials
+          .where('MaterialName', isEqualTo: materialName)
+          .where('email', isEqualTo: registerData.email)
+          .get();
+
+      if (existingMaterial.docs.isNotEmpty) {
+        emit(TeacherError("Material already exists"));
+      } else {
+        await materials.add({
+          'MaterialName': materialName,
+          'email': registerData.email,
+          'teacherName': registerData.name,
+        });
+        await fetchData(context);
+      }
     } catch (e) {
       emit(TeacherError("Failed to add material"));
       rethrow;
@@ -34,7 +45,7 @@ class TeacherCubit extends Cubit<TeacherState> {
       emit(TeacherLoading());
       QuerySnapshot snapshot = await materials.get();
       List<DocumentSnapshot> documents = snapshot.docs;
-      print(registerData.email.toString());
+
       List<Map<String, String>> materialData = documents
           .where((doc) =>
               doc['email'] == registerData.email ||

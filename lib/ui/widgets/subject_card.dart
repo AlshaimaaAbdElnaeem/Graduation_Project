@@ -3,8 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:graduation_project/router/constant_go_router.dart';
 
 class SubjectCard extends StatelessWidget {
-  const SubjectCard({super.key});
-
+  const SubjectCard({super.key, required this.materialName, required this.teacherName});
+  final String materialName;
+  final String teacherName;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -32,17 +33,17 @@ class SubjectCard extends StatelessWidget {
                   fit: BoxFit.fill,
                 ),
               ),
-              const Column(
+               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Arabic',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    materialName,
+                    style:const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    'Mr Ahmed',
-                    style: TextStyle(
+                    teacherName,
+                    style:const TextStyle(
                       fontSize: 20,
                     ),
                   ),

@@ -10,6 +10,7 @@ import 'package:graduation_project/router/constant_go_router.dart';
 import 'package:graduation_project/ui/constant.dart';
 import 'package:graduation_project/ui/widgets/custom_button.dart';
 import 'package:graduation_project/ui/widgets/custom_text_field.dart';
+import 'package:graduation_project/ui/widgets/navegationbar.dart';
 import 'package:graduation_project/util/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -196,7 +197,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             if (userData.selectPerson == 'Teacher') {
                               context.go(navigationbarTeacher);
                             } else if (userData.selectPerson == 'Student') {
-                              context.go(studentPage);
+                              context.go(navigationbarStudent);
                             }
                           } else if (state is WeakPassword) {
                             showSnackBar(context, 'Password Weak');

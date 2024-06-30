@@ -12,10 +12,10 @@ class TeacherPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          TeacherCubit()..fetchData(context),
+      create: (context) => TeacherCubit()..fetchData(context),
       child: BlocBuilder<TeacherCubit, TeacherState>(
         builder: (context, state) {
+          print('Current State: $state'); // Log the state for debugging
           var teacherCubit = BlocProvider.of<TeacherCubit>(context);
           return Scaffold(
             appBar: AppBar(
@@ -45,7 +45,7 @@ class TeacherPage extends StatelessWidget {
                               }
                             },
                             child: const Center(
-                              child:  Text(
+                              child: Text(
                                 'OK',
                                 style: TextStyle(fontSize: 20, color: mainColor),
                               ),
@@ -67,20 +67,21 @@ class TeacherPage extends StatelessWidget {
               builder: (context) {
                 if (state is TeacherInitial) {
                   return const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Enter your subject code',
-            style: TextStyle(fontSize: 35 , fontWeight: FontWeight.bold),
-          ),
-          Center(
-            child: CircleAvatar(
-              backgroundImage: AssetImage('assets/images/main.jpg'),
-              radius: 100,
-            ),
-          )
-        ],
-      );
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Enter your material code',
+                        style: TextStyle(
+                            fontSize: 35, fontWeight: FontWeight.bold),
+                      ),
+                      Center(
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage('assets/images/main.jpg'),
+                          radius: 100,
+                        ),
+                      )
+                    ],
+                  );
                 } else if (state is TeacherLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is TeacherLoaded) {

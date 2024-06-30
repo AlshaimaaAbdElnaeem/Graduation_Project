@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/router/constant_go_router.dart';
+import 'package:graduation_project/ui/screens/profile_page.dart';
 import 'package:graduation_project/ui/screens/settingPage.dart';
+import 'package:graduation_project/ui/screens/student_page.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({super.key});
@@ -12,8 +15,8 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   int index = 2;
   final pages = [
     const SettingPage(),
-    const Center(child: Text('Profiles')),
-    const Center(child: Text('HomePage')),
+    ProfilePage(),
+    StudentPage(),
     const Center(child: Text('Assignments')),
     const Center(child: Text('Live')),
   ];

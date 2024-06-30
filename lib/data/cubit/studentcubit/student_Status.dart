@@ -2,18 +2,18 @@ abstract class StudentState {}
 
 class StudentInitial extends StudentState {}
 
-class StudentDataLoading extends StudentState {}
+class StudentLoading extends StudentState {}
 
-class StudentDataLoaded extends StudentState {
-  final List<Map<String, dynamic>> data;
+class StudentLoaded extends StudentState {
+  final List<Map<String, String>> data;
 
-  StudentDataLoaded(this.data);
+  StudentLoaded(this.data);
 }
 
-class StudentDataError extends StudentState {
+class StudentError extends StudentState {
   final String error;
 
-  StudentDataError(this.error);
+  StudentError(this.error);
 }
 class MaterialDataLoading extends StudentState {}
 
