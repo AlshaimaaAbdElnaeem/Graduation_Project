@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/ui/screens/assignment_page.dart';
-import 'package:graduation_project/ui/screens/live_page.dart';
 import 'package:graduation_project/ui/screens/profile_page.dart';
 import 'package:graduation_project/ui/screens/settingPage.dart';
 import 'package:graduation_project/ui/screens/teacher_page.dart';
+import 'package:graduation_project/ui/widgets/teacher_live.dart';
 
 class CustomNavigationBarTeacher extends StatefulWidget {
   const CustomNavigationBarTeacher({Key? key});
@@ -19,7 +19,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBarTeacher> {
      ProfilePage(), 
      TeacherPage(),
     const AssignmentPage(),
-    const LivePage(),
+    CreateMeetingPage(),
   ];
 
   @override

@@ -33,10 +33,10 @@ GoRouter goRouter() {
       path: navigationbarStudent,
       builder: ((context, state) => const CustomNavigationBar()),
     ),
-     GoRoute(
-      path:teacherLive ,
-      builder: ((context, state) =>  TeacherLiveScreen()),
-    ),
+    //  GoRoute(
+    //   path:teacherLive ,
+    //   builder: ((context, state) =>  TeacherLiveScreen()),
+    // ),
   ]);
   
 }

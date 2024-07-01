@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/router/constant_go_router.dart';
 import 'package:graduation_project/ui/screens/profile_page.dart';
 import 'package:graduation_project/ui/screens/settingPage.dart';
+import 'package:graduation_project/ui/screens/student_meeting.dart';
 import 'package:graduation_project/ui/screens/student_page.dart';
 
 class CustomNavigationBar extends StatefulWidget {
@@ -18,7 +18,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
     ProfilePage(),
     StudentPage(),
     const Center(child: Text('Assignments')),
-    const Center(child: Text('Live')),
+   JoinMeetingPage(),
   ];
   @override
   Widget build(BuildContext context) {

@@ -1,71 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/data/cubit/student_meeting_cubit/student_meeting_cubit.dart';
-import 'package:graduation_project/data/cubit/student_meeting_cubit/student_meeting_status.dart';
+import 'package:graduation_project/data/cubit/meeting_cubit/meeting_cubit.dart';
+import 'package:graduation_project/data/cubit/meeting_cubit/meeting_status.dart';
+import 'package:graduation_project/ui/screens/meeting_page.dart';
 
-class StudentScreen extends StatelessWidget {
-  final String channelName;
-
-  StudentScreen({required this.channelName});
+class JoinMeetingPage extends StatelessWidget {
+  final TextEditingController _meetingIdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => StudentMeetingCubit(),
-      child: BlocBuilder<StudentMeetingCubit, StudentMeetingState>(
-        builder: (context, state) {
-          final studentCubit = context.read<StudentMeetingCubit>();
-
-          if (state is StudentMeetingInitial) {
-            studentCubit.joinChannel(channelName);
-          }
-
-          return Scaffold(
-            appBar: AppBar(
-              title:const Text('Student Screen'),
+      create: (context) => MeetingCubit(),
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Join Meeting')),
+        body: BlocListener<MeetingCubit, MeetingState>(
+          listener: (context, state) {
+            if (state is MeetingJoined) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MeetingPage(
+                    meetingName: state.meetingName,
+                    meetingId: state.meetingId,
+                  ),
+                ),
+              );
+            } else if (state is MeetingError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Error: ${state.error}')),
+              );
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                TextField(
+                  controller: _meetingIdController,
+                  decoration: const InputDecoration(labelText: 'Meeting ID'),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    context
+                        .read<MeetingCubit>()
+                        .joinMeeting(_meetingIdController.text);
+                  },
+                  child: const Text('Join Meeting'),
+                ),
+              ],
             ),
-            body: Center(
-              child: _buildContent(state, studentCubit),
-            ),
-          );
-        },
+          ),
+        ),
       ),
     );
-  }
-
-  Widget _buildContent(StudentMeetingState state, StudentMeetingCubit cubit) {
-    if (state is StudentMeetingLoading) {
-      return const CircularProgressIndicator();
-    } else if (state is StudentChannelJoined) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Joined channel: $channelName'),
-          ElevatedButton(
-            onPressed: () => cubit.leaveChannel(),
-            child:const Text('Leave Channel'),
-          ),
-        ],
-      );
-    } else if (state is StudentRemoteJoined) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Remote user joined: ${state.remoteUid}'),
-          ElevatedButton(
-            onPressed: () => cubit.leaveChannel(),
-            child:const Text('Leave Channel'),
-          ),
-        ],
-      );
-    } else if (state is StudentRemoteLeft) {
-      return const Text('Remote user left');
-    } else if (state is StudentLeftChannel) {
-      return const Text('Left the channel');
-    } else if  (state is StudentMeetingError) {
-      return Text(state.message);
-    } else {
-      return const Text('Unknown state');
-    }
   }
 }
