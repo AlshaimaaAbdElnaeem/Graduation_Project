@@ -1,87 +1,28 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 
-class MeetingPage extends StatefulWidget {
-  final String meetingName;
-  final String meetingId;
-
-  const MeetingPage({
-    Key? key,
-    required this.meetingName,
-    required this.meetingId,
-  }) : super(key: key);
-
+class LiveSteam extends StatefulWidget {
+  const LiveSteam({super.key,});
+  // final String userID;
+  // final String userName;
+  // final String liveId;
   @override
-  _MeetingPageState createState() => _MeetingPageState();
+  State<LiveSteam> createState() => _LiveSteamState();
 }
 
-class _MeetingPageState extends State<MeetingPage> {
-  late RtcEngine _engine;
-
-  @override
-  void initState() {
-    super.initState();
-    _initializeAgora();
-  }
-
-  void _initializeAgora() async {
-    _engine = createAgoraRtcEngine();
-    await _engine.initialize(const RtcEngineContext(appId: 'ed56be5e82ae4b7aae48a7fcf699f3e7'));
-
-    _engine.registerEventHandler(
-      RtcEngineEventHandler(
-        onJoinChannelSuccess: (RtcConnection connection, int uid) {
-          print('joinChannelSuccess ${connection.channelId} $uid ');
-        },
-        onUserJoined: (RtcConnection connection, int uid, int elapsed) {
-          print('userJoined $uid $elapsed');
-        },
-        onUserOffline:
-            (RtcConnection connection, int uid, UserOfflineReasonType reason) {
-          print('userOffline $uid $reason');
-        },
-      ),
-    );
-
-    await _engine.joinChannel(
-      token: '',
-      channelId: widget.meetingId,
-      uid: 0,
-      options:const ChannelMediaOptions(
-        publishCustomAudioTrack: true,
-        publishCameraTrack: true,
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _engine.leaveChannel();
-    _engine.destroyCustomEncodedVideoTrack(0);
-    super.dispose();
-  }
-
+class _LiveSteamState extends State<LiveSteam> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.meetingName),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Text('Meeting ID: ${widget.meetingId}'),
-            Expanded(
-              child: AgoraVideoView(
-                controller: VideoViewController(
-                  rtcEngine: _engine,
-                  canvas: const VideoCanvas(uid: 0),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    
+    return ZegoUIKitPrebuiltLiveStreaming(
+        appID: 955365448,
+        appSign:
+            '0ea89aa2cbf4ad3e23534fb83964d462097f4e05aa006c05fae26ca862c537bc',
+        userID: "shimoo",
+        userName: "shimoo",
+        liveID: "shimoo",
+        config:'1111111'==""?ZegoUIKitPrebuiltLiveStreamingConfig.host()
+            : ZegoUIKitPrebuiltLiveStreamingConfig.audience(),);
   }
 }

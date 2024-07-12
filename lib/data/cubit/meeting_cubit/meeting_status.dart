@@ -1,30 +1,41 @@
+// part of 'session_cubit.dart';
 
-abstract class MeetingState  {
-}
+// abstract class SessionState extends Equatable {
+//   const SessionState();
 
-class MeetingInitial extends MeetingState {}
+//   @override
+//   List<Object> get props => [];
+// }
 
-class MeetingLoading extends MeetingState {}
+// class SessionInitial extends SessionState {}
 
-class MeetingCreated extends MeetingState {
-  final String meetingName;
-  final String meetingId;
+// class SessionLoading extends SessionState {}
 
-  MeetingCreated(this.meetingName, this.meetingId);
+// class SessionCreated extends SessionState {
+//   final String sessionId;
+//   final String channelName;
 
-}
+//   const SessionCreated({required this.sessionId, required this.channelName});
 
-class MeetingJoined extends MeetingState {
-  final String meetingName;
-  final String meetingId;
+//   @override
+//   List<Object> get props => [sessionId, channelName];
+// }
 
-  MeetingJoined(this.meetingName, this.meetingId);
+// class SessionJoined extends SessionState {
+//   final String sessionId;
+//   final String channelName;
 
- 
-}
+//   const SessionJoined({required this.sessionId, required this.channelName});
 
-class MeetingError extends MeetingState {
-  final String error;
+//   @override
+//   List<Object> get props => [sessionId, channelName];
+// }
 
-  MeetingError(this.error);
-}
+// class SessionError extends SessionState {
+//   final String message;
+
+//   const SessionError({required this.message});
+
+//   @override
+//   List<Object> get props => [message];
+// }

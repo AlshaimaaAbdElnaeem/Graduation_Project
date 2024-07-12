@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/data/cubit/studentcubit/student_cubit.dart';
 import 'package:graduation_project/data/cubit/studentcubit/student_status.dart';
-import 'package:graduation_project/data/cubit/teachercubit/teacher_status.dart';
 import 'package:graduation_project/ui/constant.dart';
 import 'package:graduation_project/ui/widgets/subject_card.dart';
 

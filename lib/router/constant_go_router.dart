@@ -11,3 +11,5 @@ const String subjectPage = "/subjectPage";
 const String navigationbarTeacher = "/navigationbar";
 const String navigationbarStudent = "/navigationbarstudent";
 const String teacherLive = "/teacherLiveScreen";
+const String meetingPage = "/videoMeeting";
+const String filesPage = "/filespage";

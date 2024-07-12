@@ -10,7 +10,7 @@ class SubjectCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push(subjectPage);
+        context.push(filesPage);
       },
       child: SizedBox(
         height: 100,

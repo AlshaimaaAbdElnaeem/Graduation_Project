@@ -1,30 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/ui/constant.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
 
-class SettingPage extends StatelessWidget {
-  const SettingPage({super.key});
+import '../../router/constant_go_router.dart';
 
+class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: mainColor,
-        title: const Text('Settings'),
+        title: Text('Settings'),
       ),
-      body: const Column(
+      body: ListView(
+        padding: EdgeInsets.all(16.0),
         children: [
-          SizedBox(
-            height: 15,
-          ),
           ListTile(
-            leading: Text(
-              'Language',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          )
+            leading: Icon(Icons.lock),
+            title: Text('Change Password'),
+            onTap: () {
+              // قم بإضافة وظيفة تغيير كلمة المرور هنا
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.language),
+            title: Text('Change Language'),
+            onTap: () {
+              // قم بإضافة وظيفة تغيير اللغة هنا
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.brightness_6),
+            title: Text('Change Theme'),
+            onTap: () {
+              // قم بإضافة وظيفة تغيير السمة هنا
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('Log Out'),
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+             context.go(viewPages);
+            },
+          ),
         ],
       ),
     );
